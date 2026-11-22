@@ -1,0 +1,1066 @@
+app:
+  description: TRIGGER PHRASE FIX - Forces Q13 completion detection
+  icon: 🔧
+  icon_background: '#00FF00'
+  mode: advanced-chat
+  name: Slumber AI v2.21 TRIGGER FIX
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: bowenliang123/md_exporter:1.10.0@c75d120ab14b2bbc6f56d15f854cf2a2d1dfb464b6245ab9ce56a3e9f98b1273
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/anthropic:0.2.0@a776815b091c81662b2b54295ef4b8a54b5533c2ec1c66c7c8f2feea724f3248
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: 'Welcome! 👋 I''m here to help you prepare for your sleep surgery.
+
+      **Please fill out the form above first.**
+
+      Then you can: • Ask as many questions as you want about your surgery • When
+      you have no more questions, just say "that''s all" or "no more questions" •
+      I''ll create your personalized PDF summary • Then please complete our brief
+      survey to help us improve
+
+      Let''s get started!'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: true
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: true
+    text_to_speech:
+      autoPlay: enabled
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: start-persona-selector
+      source: '1751179373127'
+      sourceHandle: source
+      target: persona_selector
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: code
+        targetType: llm
+      id: persona-selector-llm
+      source: persona_selector
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: llm
+      id: answer-source-1751179699565-target
+      source: answer
+      sourceHandle: source
+      target: '1751179699565'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: if-else
+      id: 1751179699565-source-1751179757348-target
+      source: '1751179699565'
+      sourceHandle: source
+      target: '1751179757348'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1751179757348-true-1751179820265-target
+      source: '1751179757348'
+      sourceHandle: 'true'
+      target: '1751179820265'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1751179820265-source-1751179843612-target
+      source: '1751179820265'
+      sourceHandle: source
+      target: '1751179843612'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: llm
+      id: 1751179843612-source-1751180025996-target
+      source: '1751179843612'
+      sourceHandle: source
+      target: '1751180025996'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: 1751180025996-source-1751180082646-target
+      source: '1751180025996'
+      sourceHandle: source
+      target: '1751180082646'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: answer
+      id: 1751180082646-source-1751180099028-target
+      source: '1751180082646'
+      sourceHandle: source
+      target: '1751180099028'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: llm
+      id: 1751180099028-source-survey_detector-target
+      source: '1751180099028'
+      sourceHandle: source
+      target: survey_detector
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: if-else
+      id: survey_detector-source-survey_condition-target
+      source: survey_detector
+      sourceHandle: source
+      target: survey_condition
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: survey_condition-true-export_data-target
+      source: survey_condition
+      sourceHandle: 'true'
+      target: export_data
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: export_data-source-export_complete-target
+      source: export_data
+      sourceHandle: source
+      target: export_complete
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: Name
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: Name
+        - label: Email
+          max_length: 100
+          options: []
+          required: true
+          type: text-input
+          variable: Email
+        - label: Phone Number
+          max_length: 20
+          options: []
+          required: true
+          type: text-input
+          variable: Phone
+        - label: Surgery Type
+          max_length: 48
+          options:
+          - Tonsillectomy (tonsil removal)
+          - Adenoidectomy (adenoid removal)
+          - Turbinoplasty (nasal passage widening)
+          - Septoplasty (deviated septum correction)
+          - Nasal valve expansion (nostril opening surgery)
+          - Maxillomandibular advancement (jaw repositioning)
+          - Inspire Implant (breathing device insertion)
+          - DISE procedure (sleep endoscopy)
+          - UPPP (Uvulopalatopharyngoplasty)
+          required: true
+          type: select
+          variable: SurgeryType
+        - label: Profession
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: Profession
+        - label: Age
+          max_length: 48
+          options: []
+          required: true
+          type: number
+          variable: Age
+      height: 220
+      id: '1751179373127'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import random\nimport hashlib\n\ndef main(name, email):\n    # Method\
+          \ 1: Alternating based on email hash (deterministic)\n    # This ensures\
+          \ the same user always gets the same persona\n    hash_value = int(hashlib.md5(email.encode()).hexdigest(),\
+          \ 16)\n    persona_num = hash_value % 2\n    \n    if persona_num == 0:\n\
+          \        persona = \"BUDDY_DOCTOR\"\n        persona_description = \"\"\"\
+          \n        PERSONA: The Buddy Doctor\n        \n        You're the cool,\
+          \ laid-back doc who makes patients feel like they're chatting with a knowledgeable\
+          \ friend.\n        \n        TONE & STYLE:\n        - Super casual and conversational\n\
+          \        - Use everyday language, avoid medical jargon unless necessary\n\
+          \        - Throw in occasional humor to lighten the mood\n        - Be encouraging\
+          \ and reassuring\n        - Use contractions and informal speech patterns\n\
+          \        - Relate to their concerns\n        \"\"\"\n    else:\n       \
+          \ persona = \"PROFESSIONAL_DOCTOR\"\n        persona_description = \"\"\"\
+          \n        PERSONA: The Professional Academic\n        \n        You're the\
+          \ respected, knowledgeable physician who provides thorough, evidence-based\
+          \ guidance with warmth and professionalism.\n        \n        TONE & STYLE:\n\
+          \        - Professional yet warm and approachable\n        - Use proper\
+          \ medical terminology with clear explanations\n        - Structure responses\
+          \ logically and methodically\n        - Show respect with formal address\
+          \ initially\n        - Be precise and comprehensive\n        - Reference\
+          \ evidence and best practices\n        \"\"\"\n    \n    return {\n    \
+          \    \"persona\": persona,\n        \"persona_description\": persona_description,\n\
+          \        \"tracking_code\": f\"{persona}_{hash_value}\",\n        \"is_first_answer\"\
+          : \"yes\"\n    }\n"
+        code_language: python3
+        desc: Selects persona based on user characteristics
+        outputs:
+          is_first_answer:
+            children: null
+            type: string
+          persona:
+            children: null
+            type: string
+          persona_description:
+            children: null
+            type: string
+          tracking_code:
+            children: null
+            type: string
+        selected: false
+        title: Persona Selector
+        type: code
+        variables:
+        - value_selector:
+          - '1751179373127'
+          - Name
+          variable: name
+        - value_selector:
+          - '1751179373127'
+          - Email
+          variable: email
+      height: 98
+      id: persona_selector
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: Main conversation LLM with dynamic persona - handles ALL survey progression
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: Assistant
+            user: Patient
+          window:
+            enabled: true
+            size: 200
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: claude-opus-4-1-20250805
+          provider: langgenius/anthropic/anthropic
+        prompt_template:
+        - id: a43eba50-0a2d-4d15-81b1-fe0e144da82b
+          role: system
+          text: 'You are Slumber AI, a sleep surgery patient assistant. You provide
+            medically accurate guidance for patients preparing for sleep surgery.
+
+            Patient Information: - Name: {{#1751179373127.Name#}} - Age: {{#1751179373127.Age#}}
+            - Surgery Type: {{#1751179373127.SurgeryType#}} - Profession: {{#1751179373127.Profession#}}
+
+            ASSIGNED PERSONA FOR THIS CONVERSATION: {{#persona_selector.persona_description#}}
+
+            TRACKING: This conversation uses persona {{#persona_selector.persona#}}
+            (Code: {{#persona_selector.tracking_code#}})
+
+            CRITICAL: You MUST maintain your assigned persona throughout the ENTIRE
+            conversation!
+
+            MEDICAL ACCURACY REQUIREMENTS (SAME FOR BOTH PERSONAS):
+
+            1. STRICT TOPIC RESTRICTIONS: - ONLY answer questions directly related
+            to {{#1751179373127.SurgeryType#}} surgery and sleep-related medical topics
+            - REFUSE all off-topic questions - Both personas must provide the SAME
+            medical facts, just delivered differently
+
+            2. MEDICAL KNOWLEDGE PRIORITY: You have access to a comprehensive medical
+            knowledge base with 213 verified Q&As from our surgical team. - ALWAYS
+            search the knowledge base FIRST for relevant information - Use EXACT information
+            from the knowledge base when available - Medical team notes (marked as
+            MEDICAL NOTE) override ALL other information - NEVER contradict the verified
+            medical knowledge
+
+            3. KEY MEDICAL PROTOCOLS TO ALWAYS FOLLOW: - Tonsillectomy: MANDATORY
+            overnight stay for bleeding monitoring - Pain Management: NO NSAIDs (Aspirin,
+            Ibuprofen, Aleve) - Acetaminophen ONLY - All procedures use general anesthesia
+            unless noted otherwise - Continue CPAP until cleared by follow-up sleep
+            study - Sleep study required 3-6 months post-surgery - Turbinoplasty:
+            Often requires NO time off work except procedure day - Septoplasty: Outpatient,
+            no overnight stay - UPPP: Purpose is to reduce severity, rarely cures
+            OSA completely
+
+            4. CONVERSATION FLOW: - Start your FIRST response with a friendly greeting
+            using the patient''s name - For subsequent responses, DO NOT repeat the
+            greeting - ALWAYS end regular answers with: "Do you have any other questions
+            about your {{#1751179373127.SurgeryType#}}? (If you''re all set, just
+            say ''that''s all'' or ''no more questions'' and I''ll generate your PDF
+            summary)" - When user says they are done (e.g., "that''s all", "no more
+            questions"), DO NOT start the survey yet - Simply acknowledge their completion
+            and let the workflow handle PDF generation
+
+            5. Paste MEDICAL KNOWLEDGE
+
+            6. SURVEY RESPONSE HANDLING: After the PDF is delivered, you handle ALL
+            survey responses naturally. DO NOT wait for any workflow - YOU control
+            the entire survey.
+
+            For each survey response: - Thank them for their response - Present the
+            next question immediately
+
+            **Survey Questions (handle in order):** Q1: The chatbot understood what
+            I was asking (1-5 scale) Q2: I trust the information the chatbot provided
+            (1-5 scale) Q3: The conversation felt natural and easy to follow (1-5
+            scale) Q4: I was able to get answers to my questions efficiently (1-5
+            scale) Q5: The chatbot responses were clear and easy to understand (1-5
+            scale) Q6: After using the chatbot, my anxiety about the surgery is (5=Much
+            Less Anxious, 1=Much More Anxious) Q7: I feel more prepared for my surgery
+            after this conversation (1-5 scale) Q8: I understand the risks and recovery
+            process better now (1-5 scale) Q9: I feel more confident about what to
+            expect (1-5 scale) Q10: I would recommend this chatbot to others preparing
+            for similar surgery (1-5 scale) Q11: I would use this chatbot again if
+            I had more questions (1-5 scale) Q12: What was most helpful about this
+            conversation? (text response) Q13: What could we improve? (text response)
+
+            **Response format for Q1-Q11:** "Thank you! **Question [X] of 13:** [QUESTION
+            TEXT]
+
+            Please type a number (1-5): 5 = Strongly Agree, 4 = Agree, 3 = Neutral,
+            2 = Disagree, 1 = Strongly Disagree"
+
+            **For Q6 use:** "5 = Much Less Anxious, 4 = Somewhat Less, 3 = No Change,
+            2 = Somewhat More, 1 = Much More Anxious"
+
+            **For Q12:** "Thank you! **Question 12 of 13:** What was most helpful
+            about this conversation? (Please share what helped you most)"
+
+            **For Q13 (FINAL):** "Thank you! **Question 13 of 13:** What could we
+            improve? (Please share any suggestions)"
+
+            **CRITICAL REQUIREMENT FOR Q13 COMPLETION:** After the user responds to
+            Q13, your response MUST end with these exact words:
+
+            "Thank you for completing our 13-question survey! Your feedback is valuable
+            for improving our AI healthcare assistant.
+
+            SURVEY_COMPLETED_TRIGGER_EXPORT"
+
+            This exact phrase triggers the automatic data export. DO NOT modify or
+            omit this phrase after Q13 responses.
+
+            YOU handle the entire survey flow. No workflow automation needed until
+            Q13 completion.
+
+            '
+        - id: user-input
+          role: user
+          text: '{{#sys.query#}}'
+        selected: true
+        title: Main LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 134
+      id: llm
+      position:
+        x: 680
+        y: 282
+      positionAbsolute:
+        x: 680
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 105
+      id: answer
+      position:
+        x: 980
+        y: 282
+      positionAbsolute:
+        x: 980
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: Detects when patient wants to end conversation
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: claude-3-haiku-20240307
+          provider: langgenius/anthropic/anthropic
+        prompt_template:
+        - id: ec4c0c0b-4fbb-4df4-8974-7f96291f8ccc
+          role: system
+          text: 'Analyze the user''s latest message to determine if they want to end
+            the main consultation and receive their PDF summary.
+
+            Look for STRONG ending signals like: - "that''s all" - "no more questions"
+            - "I''m done" - "that''s it" - "no" (in response to "Do you have any other
+            questions?") - "nothing else" - "I''m good" - "all set" - "finished"
+
+            Respond with EXACTLY one word: - "PDF" if they clearly want to end and
+            get their PDF - "CONTINUE" if they have more questions
+
+            '
+        - id: 9041b89c-c548-4b3e-ae9b-a5252d533417
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: Detection LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 134
+      id: '1751179699565'
+      position:
+        x: 1284
+        y: 282
+      positionAbsolute:
+        x: 1284
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: accdfce8-99be-42e9-a3f7-73935bef2fc4
+            value: PDF
+            varType: string
+            variable_selector:
+            - '1751179699565'
+            - text
+          id: 'true'
+          logical_operator: and
+        desc: Determines next action based on detection
+        selected: false
+        title: Condition
+        type: if-else
+      height: 170
+      id: '1751179757348'
+      position:
+        x: 1584
+        y: 282
+      positionAbsolute:
+        x: 1584
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: Informs patient that PDF is being generated (maintains persona)
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: claude-3-haiku-20240307
+          provider: langgenius/anthropic/anthropic
+        prompt_template:
+        - id: a4f1cd4d-e5e0-4f71-8d4f-b35369146028
+          role: system
+          text: 'Generate a brief confirmation that ends the Q&A phase, matching the
+            assigned persona.
+
+            DO NOT mention the survey. DO NOT ask any questions.
+
+            Persona: {{#persona_selector.persona#}}
+
+            If BUDDY_DOCTOR: Say: "Perfect! Let me put together your personalized
+            PDF summary with everything we discussed about your {{#1751179373127.SurgeryType#}}."
+
+            If PROFESSIONAL_DOCTOR: Say: "Thank you for your questions, {{#1751179373127.Name#}}.
+            I will now compile your personalized PDF summary regarding your {{#1751179373127.SurgeryType#}}
+            procedure."
+
+            '
+        - id: 285eaa5e-a0fa-41f5-9ac2-64cfdfb123c9
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: PDF Generation Notice
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 134
+      id: '1751179820265'
+      position:
+        x: 1892
+        y: 282
+      positionAbsolute:
+        x: 1892
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1751179820265.text#}}'
+        desc: Shows PDF generation is starting
+        selected: false
+        title: PDF Generation Notice
+        type: answer
+        variables: []
+      height: 133
+      id: '1751179843612'
+      position:
+        x: 2196
+        y: 282
+      positionAbsolute:
+        x: 2196
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - conversation
+        desc: Generates personalized PDF with conversation summary
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: Assistant
+            user: Patient
+          window:
+            enabled: true
+            size: 200
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: claude-3-haiku-20240307
+          provider: langgenius/anthropic/anthropic
+        prompt_template:
+        - id: 79b12fac-29bc-4eca-817b-ae9db9a8746f
+          role: system
+          text: 'CRITICAL: Create PDF summary based ONLY on the actual conversation
+            that occurred.
+
+            DO NOT invent or add any questions that weren''t asked.
+
+            Generate a clean, professional PDF summary in Markdown format:
+
+            # 🏥 Slumber AI - Sleep Surgery Consultation Summary
+
+            ## 👤 Patient Information: - **Name:** {{#1751179373127.Name#}} - **Age:**
+            {{#1751179373127.Age#}} - **Surgery Type:** {{#1751179373127.SurgeryType#}}
+            - **Profession:** {{#1751179373127.Profession#}} - **Session ID:** {{#persona_selector.tracking_code#}}
+            - **Date:** [Current Date]
+
+            ## ❓ Questions You Asked & Our Answers:
+
+            [List each actual question asked and the answer provided, numbered sequentially]
+
+            ## 🔑 Key Takeaways for Your {{#1751179373127.SurgeryType#}}:
+
+            [Summarize 3-5 most important points from the conversation]
+
+            ## ⚕️ Pre-Surgery Reminders: • Follow all pre-operative instructions from
+            your surgical team • Stop eating/drinking as directed before surgery •
+            Arrange transportation and post-surgery care • Complete any required pre-operative
+            testing
+
+            ## 📞 Contact Information: If you have additional questions, please contact
+            your surgical team directly.
+
+            --- *This summary was generated from your consultation with Slumber AI.
+            Always follow your surgeon''s specific instructions.*
+
+            '
+        - id: 02baba44-23fe-47e2-815c-dc96978330cf
+          role: user
+          text: Generate the PDF summary now
+        selected: false
+        title: PDF Generator
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 134
+      id: '1751180025996'
+      position:
+        x: 2500
+        y: 282
+      positionAbsolute:
+        x: 2500
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Markdown text
+          label:
+            en_US: Markdown text
+          llm_description: ''
+          max: null
+          min: null
+          name: md_text
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Filename of the output file
+          label:
+            en_US: Filename of the output file
+          llm_description: ''
+          max: null
+          min: null
+          name: output_filename
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          md_text: ''
+          output_filename: ''
+        provider_id: bowenliang123/md_exporter/md_exporter
+        provider_name: bowenliang123/md_exporter/md_exporter
+        provider_type: builtin
+        selected: false
+        title: Markdown to PDF file
+        tool_configurations: {}
+        tool_description: Generate PDF file from Markdown text
+        tool_label: Markdown to PDF file
+        tool_name: md_to_pdf
+        tool_parameters:
+          md_text:
+            type: mixed
+            value: '{{#1751180025996.text#}}'
+          output_filename:
+            type: mixed
+            value: SlumberAI_{{#1751179373127.Name#}}_Summary_{{#persona_selector.persona#}}
+        type: tool
+        version: '2'
+      height: 54
+      id: '1751180082646'
+      position:
+        x: 2804
+        y: 282
+      positionAbsolute:
+        x: 2804
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '✅ **Your personalized PDF summary is ready!**
+
+          {{#1751180082646.files#}}
+
+          📄 This document contains: • All your questions and our answers • Key information
+          about your {{#1751179373127.SurgeryType#}} • Pre-surgery reminders • Recovery
+          timeline and instructions
+
+          ---
+
+          📝 **Quick Feedback Survey** Please help us improve by answering a few questions.
+
+          **Question 1 of 13:** The chatbot understood what I was asking
+
+          Please type a number (1-5): 5 = Strongly Agree 4 = Agree 3 = Neutral 2 =
+          Disagree 1 = Strongly Disagree'
+        desc: Final response with PDF and clear survey instructions - STOPS HERE
+        selected: false
+        title: PDF Complete & Survey Instructions
+        type: answer
+        variables: []
+      height: 392
+      id: '1751180099028'
+      position:
+        x: 3108
+        y: 282
+      positionAbsolute:
+        x: 3108
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: Detects SURVEY_COMPLETED_TRIGGER_EXPORT phrase from Main LLM
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: claude-3-haiku-20240307
+          provider: langgenius/anthropic/anthropic
+        prompt_template:
+        - id: survey-detector-system
+          role: system
+          text: 'You are analyzing the Assistant''s response (not the user''s message)
+            to detect survey completion.
+
+            Look ONLY at the Assistant''s message for the exact trigger phrase: "SURVEY_COMPLETED_TRIGGER_EXPORT"
+
+            If the Assistant''s message contains this exact phrase, respond with exactly:
+            "EXPORT_NOW"
+
+            Otherwise respond with exactly: "CONTINUE"
+
+            You are looking for the Assistant to signal Q13 completion, not user responses.'
+        - id: user-input
+          role: user
+          text: 'Assistant said: {{#llm.text#}}'
+        selected: false
+        title: Survey Completion Detector
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 134
+      id: survey_detector
+      position:
+        x: 3408
+        y: 282
+      positionAbsolute:
+        x: 3408
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: survey-complete-condition
+            value: EXPORT_NOW
+            varType: string
+            variable_selector:
+            - survey_detector
+            - text
+          id: 'true'
+          logical_operator: and
+        desc: Triggers export when survey completion is detected
+        selected: false
+        title: Export Trigger
+        type: if-else
+      height: 170
+      id: survey_condition
+      position:
+        x: 3708
+        y: 282
+      positionAbsolute:
+        x: 3708
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\nimport urllib.request\nfrom datetime import datetime\n\
+          \ndef main(name, email, phone, surgery_type, profession, age, persona, tracking_code,\
+          \ conversation_data):\n    timestamp = datetime.now().isoformat()\n    \n\
+          \    # Clean conversation data\n    clean_conversation = str(conversation_data).replace('\"\
+          ', '').replace('\\n', ' ').replace('\\r', ' ') if conversation_data else\
+          \ \"No conversation data\"\n    \n    # Truncate to prevent URL length issues\n\
+          \    if len(clean_conversation) > 2500:\n        clean_conversation = clean_conversation[:2500]\
+          \ + \"...\"\n    \n    # Create data for webhook\n    webhook_data = {\n\
+          \        \"timestamp\": timestamp,\n        \"name\": name,\n        \"\
+          email\": email,\n        \"phone\": phone,\n        \"surgery_type\": surgery_type,\n\
+          \        \"profession\": profession,\n        \"age\": str(age),\n     \
+          \   \"persona\": persona,\n        \"ab_group\": f\"Group_{persona}\",\n\
+          \        \"session_id\": tracking_code,\n        \"conversation\": clean_conversation,\n\
+          \        \"status\": \"Survey_Completed\",\n        \"notes\": f\"A/B Test:\
+          \ {persona} personality - WEBHOOK v2.21 FIXED\"\n    }\n    \n    # Send\
+          \ to webhook\n    try:\n        webhook_url = \"https://YOUR_WEBHOOK_URL\"\
+          \n        \n        # Prepare POST data\n        post_data = json.dumps(webhook_data).encode('utf-8')\n\
+          \        \n        # Create request\n        req = urllib.request.Request(webhook_url,\
+          \ data=post_data, headers={'Content-Type': 'application/json'})\n      \
+          \  \n        # Send request\n        with urllib.request.urlopen(req, timeout=15)\
+          \ as response:\n            result = response.read().decode('utf-8')\n \
+          \           \n        webhook_status = f\"SUCCESS: {result}\"\n    except\
+          \ Exception as e:\n        webhook_status = f\"ERROR: {str(e)}\"\n    \n\
+          \    return {\n        \"export_status\": webhook_status,\n        \"data_sent\"\
+          : \"YES\",\n        \"webhook_result\": \"Sent to Google Sheets\"\n    }\n"
+        code_language: python3
+        desc: Enhanced webhook with detailed logging and retry logic
+        outputs:
+          data_sent:
+            children: null
+            type: string
+          export_status:
+            children: null
+            type: string
+          webhook_result:
+            children: null
+            type: string
+        selected: false
+        title: Enhanced Webhook Export
+        type: code
+        variables:
+        - value_selector:
+          - '1751179373127'
+          - Name
+          variable: name
+        - value_selector:
+          - '1751179373127'
+          - Email
+          variable: email
+        - value_selector:
+          - '1751179373127'
+          - Phone
+          variable: phone
+        - value_selector:
+          - '1751179373127'
+          - SurgeryType
+          variable: surgery_type
+        - value_selector:
+          - '1751179373127'
+          - Profession
+          variable: profession
+        - value_selector:
+          - '1751179373127'
+          - Age
+          variable: age
+        - value_selector:
+          - persona_selector
+          - persona
+          variable: persona
+        - value_selector:
+          - persona_selector
+          - tracking_code
+          variable: tracking_code
+        - value_selector:
+          - conversation
+          variable: conversation_data
+      height: 98
+      id: export_data
+      position:
+        x: 4008
+        y: 282
+      positionAbsolute:
+        x: 4008
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '🎉 **Research Survey & Data Export Completed!**
+
+          Thank you {{#1751179373127.Name#}} for participating in our study!
+
+          📊 **Export Status:** {{#export_data.export_status#}} 📋 **Session ID:** {{#persona_selector.tracking_code#}}
+          📈 **Data Export:** {{#export_data.webhook_result#}}
+
+          Your feedback comparing different chatbot interaction styles helps improve
+          AI healthcare assistants for future patients.
+
+          **Important reminders:** • Save your PDF summary for your medical records
+          • Follow all pre-operative instructions from your surgical team • Contact
+          your surgeon with any urgent medical questions
+
+          Thank you for contributing to healthcare AI research! Best wishes for your
+          {{#1751179373127.SurgeryType#}} procedure! 🏥'
+        desc: Final completion message with comprehensive export details
+        selected: false
+        title: Export Complete
+        type: answer
+        variables: []
+      height: 497
+      id: export_complete
+      position:
+        x: 4308
+        y: 282
+      positionAbsolute:
+        x: 4308
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 116.06912372278771
+      y: 376.90050252833487
+      zoom: 0.31645492047418006
